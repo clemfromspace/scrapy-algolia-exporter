@@ -1,0 +1,18 @@
+language: python
+python:
+- 3.6
+install:
+- pip install -r requirements/requirements-test.txt
+script:
+- pytest tests/
+deploy:
+  provider: pypi
+  user: clemfromspace
+  password:
+    secure: JbzmyyTrvrRNAUs5VmZZbblp2FcRW41NqyzkcmSYivH8TIuedoUfSwYQ08rA047wyC31E153EA/vpTdRmAt5XgQO3ob8Us6EzV/9zcNflJM2PvIvSXO2q8+JtqhNKzENJjV3cvQvujuX+j2S9AxOJu88XepBOKCCEJiK2zTTC8x3wIydRNGsGM8MkFw3+Am+0fYA0G8dSVi5TUAjD1RWNtvYHd+oPUzskUR+UHFuOwRC6o4UyB7drB2pJFjL9+lVy4kV3DbRRQUiStOyYgThRREvs0zxyN6IcspmprVOSlajupqCBH2E28l12ySHd8z3DfKZHkxUODgU/wOCocF05jqPjUNnGHFzMDRmgT5J/nIzNmx4TryXI0/mdW1AozWK30shZ8l324+NoRyIt6HQZ1Xb/Hm8DzWe3Yt1cBTDLzcXtjpVimS3zaJkES/kovg75DAuqPk12DZ2JnVfrDmACRcqenrqu/ibThyg689WsdX4ndI3SfwXnkyQV2SA5CLm3ttCmt/Wd0Hmk2OgJkJfMsul1fwzwE+kiuto/4fUvUkzHTUD5lQ0QYKstObG/B8vZjUll4Lpi/oslGfizOpy282nj4b3dXUJqW5Xs5AJTkm9PizoAnGy2c7pNfzvmtxo9JKlXF7b5XXUmfbPJ2NWd70FAtoD1ulKEdFex3ccdNQ=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: clemfromspace/scrapy-algolia-exporter
+notifications:
+  email: false
