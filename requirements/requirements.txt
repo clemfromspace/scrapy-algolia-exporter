@@ -1,0 +1,2 @@
+algoliasearch==1.15.2
+Scrapy>=1.0
