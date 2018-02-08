@@ -37,6 +37,7 @@ class AlgoliaItemExporter:
         """Export the given items to the current Algolia index"""
 
         self.algolia_index.add_objects(items)
+        self.next_items = []
 
     def finish_exporting(self):
         """Export the last items from the queue, if any"""

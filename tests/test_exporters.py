@@ -48,8 +48,8 @@ class AlgoliaItemExporterTestCase(TestCase):
         # We should have a new item in the queue
         self.assertEqual(self.algolia_item_exporter.next_items, [{'id': 1}])
 
-    def test_export_item_should_call__export_items_if_algolia_item_bulk_nbr_is_reached(self):
-        """Test that the ``export_item`` method should call ``_export_items`` if ``algolia_item_bulk_nbr`` is reached"""
+    def test_export_item_should_call_add_objects_if_algolia_item_bulk_nbr_is_reached(self):
+        """Test that the ``export_item`` method should call ``add_objects`` if ``algolia_item_bulk_nbr`` is reached"""
 
         with patch('algoliasearch.algoliasearch.Client'):
             self.algolia_item_exporter.start_exporting()
@@ -57,11 +57,14 @@ class AlgoliaItemExporterTestCase(TestCase):
         # Add 100 items
         items = [
             {'id': i}
-            for i in range(0, 200)
+            for i in range(1, 102)
         ]
-        with patch('scrapy_algolia_exporter.exporters.AlgoliaItemExporter._export_items') as mocked:
+        with patch.object(self.algolia_item_exporter.algolia_index, 'add_objects') as mocked:
             for item in items:
                 self.algolia_item_exporter.export_item(item)
 
         # The ``_export_items`` was called only once
-        mocked.assert_called_once_with(items)
+        mocked.assert_called_once_with(items[:100])
+
+        # The ``next_items`` must contains only 1 item
+        self.assertEqual(self.algolia_item_exporter.next_items, [{'id': 101}])
